@@ -4,13 +4,32 @@ let random = 0;
             return random;
         }
         
-        let compWins = 0;
-        let playerWins = 0;
-        let results = "";
-        game();
+let compWins = 0;
+let playerWins = 0;
+let results = "";
+//game();
        
+
+function runRound(e){
+    let playerChoice = this.getAttribute('data-choice');
+    playRound(playerChoice,computerPlay());
+    if (playerWins == 5) {
+        const resultsOut = document.querySelector('.resultsOut');
+        resultsOut.textContent = 'Congragulations! you won';
+        compWins = 0;
+        playerWins = 0;
+    }
+    if (compWins == 5) {
+        const resultsOut = document.querySelector('.resultsOut');
+        resultsOut.textContent = 'Sorry. You Lost';
+        compWins = 0;
+        playerWins = 0;
+    }
+}
+
         function playRound(playerSelect, computerSelect){
             let playerS = playerSelect.toLowerCase();
+
             switch (playerS){
                 case "rock":
                     if(computerPlay() == 1) {
@@ -46,6 +65,10 @@ let random = 0;
                 break;
             }
             console.log(results);
+            const resultsOut = document.querySelector('.resultsOut');
+            resultsOut.textContent = results;
+            const score = document.querySelector('.score');
+            score.textContent = 'Player Wins: ' + playerWins + '  Computer Wins: ' + compWins;
             return results;
         }
   
@@ -60,11 +83,7 @@ let random = 0;
             console.log("Player wins: " + playerWins);
             console.log("Computer wins: " + compWins);
         }
-function runRound(e){
-    let playerChoice = this.getAttribute('data-choice')
-    let results = playRound(playerChoice,computerPlay());
-    return results;
-}
+
 
 const buttons = document.querySelectorAll('button');
 buttons.forEach(button => button.addEventListener('click', runRound));
